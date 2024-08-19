@@ -12,7 +12,11 @@
 
         <action
             android:id="@+id/action_albumListFragment_to_albumDetailFragment"
-            app:destination="@id/fragment_album_detail" />
+            app:destination="@id/fragment_album_detail"
+            app:enterAnim="@anim/to_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/from_right" />
     </fragment>
 
     <fragment
@@ -20,6 +24,17 @@
         android:name="com.avrioc.cleangallery.presentation.ui.albumdetail.AlbumDetailFragment"
         android:label="Pictures"
         tools:layout="@layout/fragment_album_detail">
-
+        <action
+            android:id="@+id/action_albumDetailFragment_to_singlePhotoFragment"
+            app:destination="@id/fragment_single_photo"
+            app:enterAnim="@anim/to_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/from_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragment_single_photo"
+        android:name="com.avrioc.cleangallery.presentation.ui.singlephoto.SinglePhotoFragment"
+        android:label="SinglePhotoFragment" />
 </navigation>

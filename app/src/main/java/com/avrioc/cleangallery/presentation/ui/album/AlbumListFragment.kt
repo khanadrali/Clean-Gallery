@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.avrioc.cleangallery.domain.model.Album
-import com.avrioc.cleangallery.presentation.adapter.album.AlbumAdapter
+import com.avrioc.cleangallery.presentation.adapter.AlbumAdapter
 import com.avrioc.cleangallery.presentation.ui.SharedViewModel
 import com.example.testgallaryapplication.R
 import com.example.testgallaryapplication.databinding.FragmentAlbumListBinding

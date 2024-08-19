@@ -3,7 +3,7 @@ package com.avrioc.cleangallery.presentation.ui.album
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.avrioc.cleangallery.presentation.adapter.album.AlbumAdapter
+import com.avrioc.cleangallery.presentation.adapter.AlbumAdapter
 import com.avrioc.cleangallery.domain.model.Album
 import com.avrioc.cleangallery.domain.model.Media
 import com.avrioc.cleangallery.domain.usecase.GetAllMediaUseCase

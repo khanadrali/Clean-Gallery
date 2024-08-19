@@ -1,4 +1,4 @@
-package com.avrioc.cleangallery.presentation.adapter.album
+package com.avrioc.cleangallery.presentation.adapter
 
 
 import android.view.LayoutInflater

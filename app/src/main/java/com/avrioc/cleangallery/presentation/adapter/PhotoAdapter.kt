@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.avrioc.cleangallery.databinding.ItemPhotoBinding
 import com.avrioc.cleangallery.domain.model.Media
 import com.example.testgallaryapplication.presentation.listeners.PhotoClickListener
-import com.example.testgallaryapplication.databinding.ItemPhotoBinding
 
 class PhotoAdapter(
     private val itemSize: Int,

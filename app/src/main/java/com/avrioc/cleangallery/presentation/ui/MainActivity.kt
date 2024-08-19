@@ -9,10 +9,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.avrioc.cleangallery.R
+import com.avrioc.cleangallery.databinding.ActivityMainBinding
 import com.avrioc.cleangallery.presentation.utils.PermissionDialogHelper
 import com.avrioc.cleangallery.presentation.utils.PermissionManager
-import com.example.testgallaryapplication.R
-import com.example.testgallaryapplication.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

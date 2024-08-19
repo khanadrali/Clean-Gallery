@@ -11,11 +11,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.avrioc.cleangallery.R
+import com.avrioc.cleangallery.databinding.FragmentAlbumListBinding
 import com.avrioc.cleangallery.domain.model.Album
 import com.avrioc.cleangallery.presentation.adapter.AlbumAdapter
 import com.avrioc.cleangallery.presentation.ui.SharedViewModel
-import com.example.testgallaryapplication.R
-import com.example.testgallaryapplication.databinding.FragmentAlbumListBinding
 import com.example.testgallaryapplication.presentation.listeners.AlbumClickListener
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,7 +1,7 @@
 package com.avrioc.cleangallery.presentation.utils
 
 import android.app.Activity
-import com.example.testgallaryapplication.R
+import com.avrioc.cleangallery.R
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 
 class PermissionDialogHelper(

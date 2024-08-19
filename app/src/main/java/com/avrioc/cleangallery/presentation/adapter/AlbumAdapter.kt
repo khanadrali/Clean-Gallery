@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import com.avrioc.cleangallery.databinding.ItemAlbumGridBinding
+import com.avrioc.cleangallery.databinding.ItemAlbumLinearBinding
 import com.avrioc.cleangallery.domain.model.Album
-import com.example.testgallaryapplication.databinding.ItemAlbumGridBinding
-import com.example.testgallaryapplication.databinding.ItemAlbumLinearBinding
 import com.example.testgallaryapplication.presentation.listeners.AlbumClickListener
 
 class AlbumAdapter(

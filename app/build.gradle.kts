@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.testgallaryapplication"
+    namespace = "com.avrioc.cleangallery"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.testgallaryapplication"
+        applicationId = "com.avrioc.cleangallery"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

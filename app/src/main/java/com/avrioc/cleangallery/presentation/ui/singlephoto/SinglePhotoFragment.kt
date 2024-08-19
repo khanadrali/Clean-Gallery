@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.avrioc.cleangallery.databinding.FragmentSinglePhotoBinding
 import com.avrioc.cleangallery.presentation.ui.SharedViewModel
-import com.example.testgallaryapplication.databinding.FragmentSinglePhotoBinding
 
 class SinglePhotoFragment : Fragment() {
 

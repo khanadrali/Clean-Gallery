@@ -2,6 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.CleanGallery" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/darkPrimaryColor</item>
+        <item name="colorPrimaryVariant">@color/darkPrimaryColorVariant</item>
+        <item name="colorSecondary">@color/darkSecondaryColor</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="material_dialog_positive_button_text_color">@color/white</item>
+        <item name="material_dialog_negative_button_text_color">@color/darkPrimaryColorVariant</item>
     </style>
 </resources>

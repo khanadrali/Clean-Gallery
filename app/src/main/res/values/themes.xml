@@ -2,7 +2,11 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.CleanGallery" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/lightPrimaryColor</item>
+        <item name="colorPrimaryVariant">@color/lightPrimaryColorVariant</item>
+        <item name="colorSecondary">@color/lightSecondaryColor</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:statusBarColor">@color/lightPrimaryColor</item>
     </style>
 
     <style name="Theme.CleanGallery" parent="Base.Theme.CleanGallery" />

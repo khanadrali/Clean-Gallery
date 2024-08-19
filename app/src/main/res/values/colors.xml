@@ -2,4 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Light Theme Colors -->
+    <color name="lightPrimaryColor">#FF6F61</color>
+    <color name="lightPrimaryColorVariant">#FF4C4C</color>
+    <color name="lightSecondaryColor">#FFC0CB</color>
+    <color name="lightBackgroundColor">#F5F5F5</color>
+    <color name="lightSurfaceColor">#FFFFFF</color>
+    <color name="lightTextColor">#333333</color>
+
+    <!-- Dark Theme Colors -->
+    <color name="darkPrimaryColor">#C62828</color>
+    <color name="darkPrimaryColorVariant">#B71C1C</color>
+    <color name="darkSecondaryColor">#E57373</color>
+    <color name="darkBackgroundColor">#303030</color>
+    <color name="darkSurfaceColor">#121212</color>
+    <color name="darkTextColor">#E0E0E0</color>
 </resources>

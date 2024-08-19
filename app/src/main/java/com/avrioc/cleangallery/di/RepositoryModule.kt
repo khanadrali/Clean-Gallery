@@ -2,6 +2,8 @@ package com.avrioc.cleangallery.di
 
 import android.content.ContentResolver
 import android.content.Context
+import com.avrioc.cleangallery.data.repository.MediaRepositoryImpl
+import com.avrioc.cleangallery.domain.repository.IMediaRepository
 import com.avrioc.cleangallery.presentation.utils.PermissionManager
 import dagger.Module
 import dagger.Provides
@@ -25,5 +27,12 @@ object RepositoryModule {
     fun providePermissionManager(@ApplicationContext context: Context): PermissionManager {
         return PermissionManager(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideMediaRepository(contentResolver: ContentResolver): IMediaRepository {
+        return MediaRepositoryImpl(contentResolver)
+    }
+
 
 }

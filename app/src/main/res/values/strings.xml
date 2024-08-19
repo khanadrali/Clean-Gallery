@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Clean Gallery</string>
+    <string name="gallery">Gallery</string>
+    <string name="you_have_not_selected_any_media">You have not selected any media during partial permission kindly grant the required permission in app setting and if the permission is already granted then you do not have Media in this phone .</string>
+    <string name="title_permission_required">Permission Required!</string>
+    <string name="permission_required_message">In order to run this application we need storage permission so you can see your Picture and Videos</string>
+    <string name="close_gallery">Close Gallery</string>
+    <string name="give_permission">Give Permission</string>
+    <string name="allow_permission">Allow Permission</string>
 </resources>

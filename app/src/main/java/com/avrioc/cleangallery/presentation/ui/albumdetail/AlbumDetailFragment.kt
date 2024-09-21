@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -17,6 +18,8 @@ import com.avrioc.cleangallery.presentation.adapter.PhotoAdapter
 import com.avrioc.cleangallery.presentation.ui.SharedViewModel
 import com.example.testgallaryapplication.presentation.listeners.PhotoClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AlbumDetailFragment : Fragment(), PhotoClickListener {
@@ -61,15 +64,19 @@ class AlbumDetailFragment : Fragment(), PhotoClickListener {
 
     private fun initObservers() {
 
-        albumDetailViewModel.mediaList.observe(viewLifecycleOwner) { mediaList ->
-            (binding.rvPhotos.adapter as PhotoAdapter).submitList(mediaList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            albumDetailViewModel.mediaList.collectLatest { mediaList ->
+                (binding.rvPhotos.adapter as PhotoAdapter).submitList(mediaList)
+            }
         }
 
-        albumDetailViewModel.navigateBack.observe(viewLifecycleOwner) {
-            if (it) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            albumDetailViewModel.navigateBack.collectLatest {
                 findNavController().navigateUp()
             }
         }
+
+
         binding.rvPhotos.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -78,7 +85,7 @@ class AlbumDetailFragment : Fragment(), PhotoClickListener {
                 val lastVisiblePosition = lastVisiblePositions.maxOrNull() ?: -1
 
                 // Check if we have scrolled to the end of the list
-                if (!albumDetailViewModel.loading.value!! && lastVisiblePosition >= (binding.rvPhotos.adapter?.itemCount
+                if (!albumDetailViewModel.loading.value && lastVisiblePosition >= (binding.rvPhotos.adapter?.itemCount
                         ?: 0) - 1
                 ) {
                     albumDetailViewModel.loadNextPage()

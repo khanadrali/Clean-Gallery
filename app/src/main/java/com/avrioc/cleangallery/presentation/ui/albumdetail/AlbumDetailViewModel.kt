@@ -1,33 +1,38 @@
 package com.avrioc.cleangallery.presentation.ui.albumdetail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.avrioc.cleangallery.domain.model.Media
 import com.avrioc.cleangallery.presentation.ui.album.AlbumListViewModel
-import com.avrioc.cleangallery.presentation.utils.SingleLiveDataEvent
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class AlbumDetailViewModel @Inject constructor() : ViewModel() {
-    private val _mediaList = MutableLiveData<List<Media>>()
-    private val _loading = MutableLiveData<Boolean>()
+
+    private val _mediaList = MutableStateFlow<List<Media>>(emptyList())
+    private val _loading = MutableStateFlow(false)
+    private val _navigateBack =
+        MutableSharedFlow<Unit>(replay = 1) // Use a replay buffer to hold the last event
 
     private var allMediaList: List<Media> = emptyList()
     private var currentPage = 0
 
-    val mediaList: LiveData<List<Media>> get() = _mediaList
-    val loading: LiveData<Boolean> get() = _loading
-    val navigateBack = SingleLiveDataEvent<Boolean>()
-    val albumName = MutableLiveData<String>()
+    val mediaList: StateFlow<List<Media>> get() = _mediaList.asStateFlow()
+    val loading: StateFlow<Boolean> get() = _loading.asStateFlow()
+    val navigateBack = _navigateBack.asSharedFlow() // Expose as SharedFlow
+    val albumName = MutableStateFlow(EMPTY_STRING)
 
 
     fun loadNextPage() {
-        if (_loading.value == true) return
+        if (_loading.value) return
         loadPaginatedMedia(currentPage + 1)
     }
 
     fun onBackPressed() {
-        navigateBack.value = true
+        _navigateBack.tryEmit(Unit)
     }
 
     fun setMediaList(media: List<Media>) {
@@ -45,7 +50,6 @@ class AlbumDetailViewModel @Inject constructor() : ViewModel() {
 
 
     private fun loadPaginatedMedia(page: Int) {
-
         // if true then No more data to load
         if (page * PAGE_SIZE >= allMediaList.size) {
             _loading.value = false
@@ -63,5 +67,6 @@ class AlbumDetailViewModel @Inject constructor() : ViewModel() {
 
     companion object {
         private const val PAGE_SIZE = 50 // Number of items per page
+        private const val EMPTY_STRING = ""
     }
 }

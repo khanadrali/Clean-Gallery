@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,8 @@ import com.avrioc.cleangallery.presentation.adapter.AlbumAdapter
 import com.avrioc.cleangallery.presentation.ui.SharedViewModel
 import com.example.testgallaryapplication.presentation.listeners.AlbumClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AlbumListFragment : Fragment(), AlbumClickListener {
@@ -41,7 +44,7 @@ class AlbumListFragment : Fragment(), AlbumClickListener {
     override fun onAlbumClick(album: Album) {
         sharedViewModel.apply {
             albumName = album.albumName
-            mediaList.value = albumListViewModel.mediaList.value
+            updateMediaList(albumListViewModel.mediaList.value)
         }
         findNavController().navigate(R.id.action_albumListFragment_to_albumDetailFragment)
     }
@@ -51,21 +54,22 @@ class AlbumListFragment : Fragment(), AlbumClickListener {
         val viewType = albumListViewModel.viewType.value
         val list = albumListViewModel.albumList.value
         if (viewType == AlbumAdapter.VIEW_TYPE_GRID) changeToLinearLayout() else changeToGridLayout()
-        albumListViewModel.albumList.value = getSortedList(list)
+        albumListViewModel.updateAlbumList(getSortedList(list))
     }
 
     private fun changeToGridLayout() {
         binding.rvAlbum.layoutManager = staggeredGridLayoutManager
         staggeredGridLayoutManager.spanCount = AlbumAdapter.VIEW_TYPE_GRID
         rvAlbumAdapter?.setViewType(AlbumAdapter.VIEW_TYPE_GRID)
-        albumListViewModel.viewType.value = AlbumAdapter.VIEW_TYPE_GRID
+        albumListViewModel.updateViewType(AlbumAdapter.VIEW_TYPE_GRID)
+
     }
 
     private fun changeToLinearLayout() {
         binding.rvAlbum.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvAlbumAdapter?.setViewType(AlbumAdapter.VIEW_TYPE_LINEAR)
-        albumListViewModel.viewType.value = AlbumAdapter.VIEW_TYPE_LINEAR
+        albumListViewModel.updateViewType(AlbumAdapter.VIEW_TYPE_LINEAR)
     }
 
     private fun getSortedList(list: MutableList<Album>?) = list?.let {
@@ -79,17 +83,30 @@ class AlbumListFragment : Fragment(), AlbumClickListener {
 
     private fun initObservers() {
 
-        sharedViewModel.loadMedia.observe(viewLifecycleOwner) { isLoadMedia ->
-            if (isLoadMedia) albumListViewModel.loadMedia()
+        viewLifecycleOwner.lifecycleScope.launch {
+            sharedViewModel.loadMedia.collectLatest {
+                albumListViewModel.loadMedia()
+            }
         }
 
-        albumListViewModel.albumList.observe(viewLifecycleOwner) { albumList ->
-            if (rvAlbumAdapter == null) {
-                rvAlbumAdapter = AlbumAdapter(albumList, this@AlbumListFragment, getDynamicSize())
-                binding.rvAlbum.adapter = rvAlbumAdapter
-            } else {
-                rvAlbumAdapter?.updateList(albumList)
-                binding.rvAlbum.adapter = rvAlbumAdapter
+        // Collect albumList StateFlow
+        viewLifecycleOwner.lifecycleScope.launch {
+            albumListViewModel.albumList.collectLatest { albumList ->
+                if (rvAlbumAdapter == null) {
+                    rvAlbumAdapter =
+                        AlbumAdapter(albumList, this@AlbumListFragment, getDynamicSize())
+                    binding.rvAlbum.adapter = rvAlbumAdapter
+                } else {
+                    rvAlbumAdapter?.updateList(albumList)
+                    binding.rvAlbum.adapter = rvAlbumAdapter
+                }
+            }
+        }
+
+        // Collect viewType StateFlow for layout changes
+        viewLifecycleOwner.lifecycleScope.launch {
+            albumListViewModel.viewType.collect { viewType ->
+                if (viewType == AlbumAdapter.VIEW_TYPE_GRID) changeToGridLayout() else changeToLinearLayout()
             }
         }
     }
@@ -97,7 +114,7 @@ class AlbumListFragment : Fragment(), AlbumClickListener {
     private fun initViews() {
 
         staggeredGridLayoutManager = StaggeredGridLayoutManager(
-            albumListViewModel.viewType.value ?: 0, GridLayoutManager.VERTICAL
+            albumListViewModel.viewType.value, GridLayoutManager.VERTICAL
         )
         binding.apply {
             fragment = this@AlbumListFragment

@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.avrioc.cleangallery.databinding.FragmentSinglePhotoBinding
 import com.avrioc.cleangallery.presentation.ui.SharedViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class SinglePhotoFragment : Fragment() {
 
@@ -33,16 +36,14 @@ class SinglePhotoFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             lottieView = binding.lottieAnimation
         }
-        singlePhotoViewModel.singleImage.value = sharedViewModel.singleImage
+        singlePhotoViewModel.updateImage( sharedViewModel.singleImage)
     }
 
     private fun initObservers() {
-
-        singlePhotoViewModel.navigateBack.observe(viewLifecycleOwner) {
-            if (it) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            singlePhotoViewModel.navigateBack.collectLatest {
                 findNavController().navigateUp()
             }
         }
-
     }
 }

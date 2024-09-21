@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionsLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
             permissionManager.handlePermissionsResult(results, onPartialPermissionsGranted = {
-                viewModel.loadMedia(true)
-            }, onFullPermissionsGranted = { viewModel.loadMedia(true) }, onPermissionsDenied = {
+                viewModel.loadMedia()
+            }, onFullPermissionsGranted = { viewModel.loadMedia() }, onPermissionsDenied = {
                 permissionDialogHelper.show()
             })
         }
@@ -64,11 +64,9 @@ class MainActivity : AppCompatActivity() {
     private fun checkStoragePermission() {
         permissionManager.setPermissionLauncher(requestPermissionsLauncher)
         permissionManager.checkAndRequestPermissions(onPartialPermissionsGranted = {
-            viewModel.loadMedia(
-                true
-            )
+            viewModel.loadMedia()
         },
-            onFullPermissionsGranted = { viewModel.loadMedia(true) },
+            onFullPermissionsGranted = { viewModel.loadMedia() },
             onPermissionsDenied = {
                 permissionDialogHelper.show()
             })
